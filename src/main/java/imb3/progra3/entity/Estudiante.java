@@ -50,7 +50,7 @@ public class Estudiante implements IEstudianteService{
 
 	
 	@Override
-	public Optional<Estudiante> eliminarPorId(Integer idEstudiante) {
+	public String eliminarPorId(Integer idEstudiante) {
 		// TODO Auto-generated method stub
 		return null;
 	}

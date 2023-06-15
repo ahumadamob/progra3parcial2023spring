@@ -15,7 +15,7 @@ public interface IEstudianteService {
 	
 	Estudiante actualizarEstudiante(Estudiante request);
 
-	Optional<Estudiante> eliminarPorId(Integer idEstudiante);
+	String eliminarPorId(Integer idEstudiante);
 
 	Optional<Estudiante> eliminarPorTodos();
 

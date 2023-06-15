@@ -28,8 +28,9 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	//GET BY ID
 	@Override
 	public Optional<Estudiante> buscarPorId(Integer idEstudiante) {
-
+		
 		return repo.findById(idEstudiante);
+		
 	}
 	
 	@Override
@@ -47,10 +48,16 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	//CREATE
 
 	@Override
-	public Optional<Estudiante> eliminarPorId(Integer idEstudiante) {
-		// TODO Auto-generated method stub
+	public String eliminarPorId(Integer idEstudiante) {
+		Optional<Estudiante> id = repo.findById(idEstudiante);
+		if (id.isPresent()) {
 		repo.deleteById(idEstudiante);
-		return Optional.empty();
+		} else {
+			return null; //Agregar mensaje de error
+		}
+		return null;
+		
+		
 	}
 
 	@Override
