@@ -33,19 +33,22 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		
 	}
 	
+	//CREATE
 	@Override
 	public Estudiante crearEstudiante(Estudiante request) {
 		repo.save(request);
 		return request;
 	}
 
+	
+	//PUT
 	@Override
 	public Estudiante actualizarEstudiante(Estudiante request) {
 		repo.save(request);
 		return request;
 	}
 	
-	//CREATE
+	//DELETE
 
 	@Override
 	public String eliminarPorId(Integer idEstudiante) {
@@ -53,7 +56,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		if (id.isPresent()) {
 		repo.deleteById(idEstudiante);
 		} else {
-			return null; //Agregar mensaje de error
+			return null;
 		}
 		return null;
 		
@@ -61,7 +64,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	}
 
 	@Override
-	public Optional<Estudiante> eliminarPorTodos() {
+	public Optional<Estudiante> eliminarTodos() {
 		
 		repo.deleteAll();
 		return null;

@@ -80,8 +80,7 @@ public class EstudianteController {
 	        Estudiante estudianteActualizado = servicio.actualizarEstudiante(request);
 	        return ResponseEntity.ok(estudianteActualizado);
 	    } else {
-	        String mensajeError = "No se encontró un estudiante con el ID proporcionado";
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
 	    }
 	}
 
@@ -91,8 +90,7 @@ public class EstudianteController {
 		if ("OK".equalsIgnoreCase(respuesta)) {
 			return new ResponseEntity<>(respuesta,HttpStatus.NO_CONTENT);
 		} else {
-			String mensajeError = "No se encontró un estudiante con el ID proporcionado";
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
 			
 		} 
 		
@@ -101,7 +99,7 @@ public class EstudianteController {
 	
 	@DeleteMapping("/estudiantes/eliminar/todos")
 	public Optional<Estudiante> eliminarTodos(){
-		return servicio.eliminarPorTodos();
+		return servicio.eliminarTodos();
 		
 	}
 	

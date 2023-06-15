@@ -56,7 +56,7 @@ public class Estudiante implements IEstudianteService{
 	}
 	
 	@Override
-	public Optional<Estudiante> eliminarPorTodos() {
+	public Optional<Estudiante> eliminarTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}

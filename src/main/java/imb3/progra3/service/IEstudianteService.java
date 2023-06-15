@@ -17,7 +17,7 @@ public interface IEstudianteService {
 
 	String eliminarPorId(Integer idEstudiante);
 
-	Optional<Estudiante> eliminarPorTodos();
+	Optional<Estudiante> eliminarTodos();
 
 	
 
