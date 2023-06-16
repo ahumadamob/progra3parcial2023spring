@@ -49,29 +49,7 @@ public class EstudianteController {
 		return servicio.crearEstudiante(request);
 		
 	}
-	
-	/*@PutMapping("/estudiantes/actualizar")
-	public Estudiante actualizar(@RequestBody Estudiante request) {
-		return servicio.actualizarEstudiante(request);
-		
-		
-	}
-	
-	
-	/* 
-	  public ResponseEntity<Object> actualizar(@RequestBody Estudiante request) {
-		Optional<Estudiante> estudianteExistente = servicio.buscarPorId(request.getId());
-		if (estudianteExistente.isPresent()) {
-			return actualizar(request);
-		} else {
-			String mensajeError = "No se encontró un estudiante con el ID proporcionado";
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
-	  
-		}
-		
-		
-	}
-	 */
+
 	
 	@PutMapping("/estudiantes/actualizar")
 	public ResponseEntity<Object> actualizar(@RequestBody Estudiante request) {
@@ -85,10 +63,11 @@ public class EstudianteController {
 	}
 
 	@DeleteMapping("/estudiantes/eliminar/{idEstudiante}")
-	public ResponseEntity<String> eliminarPorId(@PathVariable Integer idEstudiante){
-		String respuesta = servicio.eliminarPorId(idEstudiante);
-		if ("OK".equalsIgnoreCase(respuesta)) {
-			return new ResponseEntity<>(respuesta,HttpStatus.NO_CONTENT);
+	public ResponseEntity<Object> eliminarPorId(@PathVariable Integer idEstudiante){
+		Optional<Estudiante> estudiante = servicio.buscarPorId(idEstudiante);
+		if (estudiante.isPresent()){
+			servicio.eliminarPorId(idEstudiante);
+			return ResponseEntity.status(HttpStatus.OK).body("Estudiante eliminado");
 		} else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
 			

@@ -2,9 +2,10 @@ package imb3.progra3.service;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.stereotype.Service;
 import imb3.progra3.entity.Estudiante;
 
+@Service
 public interface IEstudianteService {
 
 	List<Estudiante> buscarTodos();
@@ -15,7 +16,7 @@ public interface IEstudianteService {
 	
 	Estudiante actualizarEstudiante(Estudiante request);
 
-	String eliminarPorId(Integer idEstudiante);
+	Optional<Estudiante> eliminarPorId(Integer idEstudiante);
 
 	Optional<Estudiante> eliminarTodos();
 

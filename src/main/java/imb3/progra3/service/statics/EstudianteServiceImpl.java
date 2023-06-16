@@ -51,13 +51,9 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	//DELETE
 
 	@Override
-	public String eliminarPorId(Integer idEstudiante) {
-		Optional<Estudiante> id = repo.findById(idEstudiante);
-		if (id.isPresent()) {
+	public Optional<Estudiante> eliminarPorId(Integer idEstudiante) {
+	
 		repo.deleteById(idEstudiante);
-		} else {
-			return null;
-		}
 		return null;
 		
 		
