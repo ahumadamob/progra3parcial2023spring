@@ -1,7 +1,10 @@
 package imb3.progra3.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +27,26 @@ public class Controller {
 	
 	//verbos específicos del mapping
 	@GetMapping("/CiaDeSeguros")
-	public List <CiaDeSeguros> buscarTodos(){
-		return service.buscarTodos();
+	public ResponseEntity<APIResponse<List<CiaDeSeguros>>>buscarTodos(){
+		APIResponse<List<CiaDeSeguros>> response = new APIResponse<List<CiaDeSeguros>>(200, null, service.buscarTodos());	
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@GetMapping("/CiaDeSeguros/{id}") //consultar
-	public CiaDeSeguros buscarporId(@PathVariable("id") Integer id){ //filtrado por segmento específico
-		return service.buscarPorId(id);
+	public ResponseEntity<APIResponse<CiaDeSeguros>>buscarporId(@PathVariable("id") Integer id){ //filtrado por segmento específico
+		
+		CiaDeSeguros compania = service.buscarPorId(id);
+		
+		if(compania == null) {
+			List<String> messages = new ArrayList<>();
+			messages.add("No encontrada Compañía con ID: "+ id.toString());
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, compania);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
+		else {
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.OK.value(), null, compania);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}
 	}
 	
 	@PostMapping("/CiaDeSeguros") //imprimir

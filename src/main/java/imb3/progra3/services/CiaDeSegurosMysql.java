@@ -22,13 +22,11 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 	//reemplaza el método de la superclase o interfaz en este caso
 	@Override
 	public List<CiaDeSeguros> buscarTodos(){
-		// TODO Auto-generated method stub
 		return repo.findAll();
 	}
 
 	@Override
     public CiaDeSeguros buscarPorId(Integer id) {
-		// TODO Auto-generated method stub
 		Optional<CiaDeSeguros> companiaOptional = repo.findById(id);
         if (companiaOptional.isPresent()) {
             return companiaOptional.get();
@@ -39,7 +37,6 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 
 	@Override
 	public CiaDeSeguros crear(CiaDeSeguros compania) {
-		// TODO Auto-generated method stub
 		return repo.save(compania);
 	}
 
@@ -63,13 +60,13 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 	
 	@Override
 	public String eliminar(Integer id) {
-		// TODO Auto-generated method stub
 		boolean existeRegistro = repo.existsById(id);
 	    if (existeRegistro) {
 	        repo.deleteById(id);
 	        return "Registro eliminado correctamente.";
 	    } else {
 	        return "Registro no encontrado.";
-	    }	}
+	    }	
+	 }
 	
 }
