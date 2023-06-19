@@ -27,9 +27,13 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	
 	//GET BY ID
 	@Override
-	public Optional<Estudiante> buscarPorId(Integer idEstudiante) {
-		
-		return repo.findById(idEstudiante);
+	public Estudiante buscarPorId(Integer idEstudiante) {
+		Optional<Estudiante> optional = repo.findById(idEstudiante);
+		if(optional.isPresent()) {
+			return optional.get();
+		} else {
+			return null;
+		}
 		
 	}
 	
@@ -48,11 +52,10 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		return request;
 	}
 	
-	//DELETE
-
-	@Override
-	public Optional<Estudiante> eliminarPorId(Integer idEstudiante) {
 	
+	//DELETE
+	@Override
+	public Estudiante eliminarPorId(Integer idEstudiante) {
 		repo.deleteById(idEstudiante);
 		return null;
 		
@@ -60,7 +63,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	}
 
 	@Override
-	public Optional<Estudiante> eliminarTodos() {
+	public Estudiante eliminarTodos() {
 		
 		repo.deleteAll();
 		return null;

@@ -2,8 +2,6 @@ package imb3.progra3.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,50 +33,55 @@ public class EstudianteController {
 
 	@GetMapping("/estudiantes/{idEstudiante}")
 	public ResponseEntity<Object> buscarPorId(@PathVariable Integer idEstudiante){
-		Optional<Estudiante> estudiante = servicio.buscarPorId(idEstudiante);
-		if (estudiante.isPresent()) {
-	        return ResponseEntity.ok(estudiante.get());
-	    } else {
-	        String mensajeError = "No se encontró un estudiante con el ID proporcionado";
+		Estudiante estudiante = servicio.buscarPorId(idEstudiante);
+		if (estudiante == null) {
+			String mensajeError = "No se encontró un estudiante con el ID proporcionado";
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+	    } else {
+	    	return ResponseEntity.ok(estudiante);
 	    }
 	}
 
-	@PostMapping("/estudiantes/crear")
+	@PostMapping("/estudiantes")
 	public Estudiante crearEstudiante(@RequestBody Estudiante request){
 		return servicio.crearEstudiante(request);
 		
 	}
 
 	
-	@PutMapping("/estudiantes/actualizar")
+	@PutMapping("/estudiantes")
 	public ResponseEntity<Object> actualizar(@RequestBody Estudiante request) {
-	    Optional<Estudiante> estudianteExistente = servicio.buscarPorId(request.getId());
-	    if (estudianteExistente.isPresent()) {
-	        Estudiante estudianteActualizado = servicio.actualizarEstudiante(request);
-	        return ResponseEntity.ok(estudianteActualizado);
+	    Estudiante estudianteExistente = servicio.buscarPorId(request.getId());
+	    if (estudianteExistente == null) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
 	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
+	    	Estudiante estudianteActualizado = servicio.actualizarEstudiante(request);
+	        return ResponseEntity.ok(estudianteActualizado);
+	        
 	    }
 	}
 
-	@DeleteMapping("/estudiantes/eliminar/{idEstudiante}")
+	@DeleteMapping("/estudiantes/{idEstudiante}")
 	public ResponseEntity<Object> eliminarPorId(@PathVariable Integer idEstudiante){
-		Optional<Estudiante> estudiante = servicio.buscarPorId(idEstudiante);
-		if (estudiante.isPresent()){
+		Estudiante estudiante = servicio.buscarPorId(idEstudiante);
+		if (estudiante == null){
+			String mensajeError = "No se encontró un estudiante con el ID proporcionado";
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+			
+		} else {
 			servicio.eliminarPorId(idEstudiante);
 			return ResponseEntity.status(HttpStatus.OK).body("Estudiante eliminado");
-		} else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un estudiante con el ID proporcionado");
 			
 		} 
 		
 		
 	}
 	
-	@DeleteMapping("/estudiantes/eliminar/todos")
-	public Optional<Estudiante> eliminarTodos(){
-		return servicio.eliminarTodos();
+	@DeleteMapping("/estudiantes/all")
+	public ResponseEntity<String> eliminarTodos(){
+		servicio.eliminarTodos();
+		String mensaje = "Tabla de estudiante vaciada con éxito.";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
 		
 	}
 	
