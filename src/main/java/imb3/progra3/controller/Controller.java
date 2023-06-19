@@ -14,36 +14,38 @@ import org.springframework.web.bind.annotation.RestController;
 import imb3.progra3.entity.CiaDeSeguros;
 import imb3.progra3.services.ICiaDeSegurosService;
 
+//indica clase controladora y ruta de aplicación
 @RestController
 @RequestMapping("/api/v1")
 public class Controller {
+	//inyección de dependencias, funcionamiento automático de los objetos
 	@Autowired
 	ICiaDeSegurosService service;
 	
-	
+	//verbos específicos del mapping
 	@GetMapping("/CiaDeSeguros")
 	public List <CiaDeSeguros> buscarTodos(){
 		return service.buscarTodos();
 	}
 
-	@GetMapping("/CiaDeSeguros/{id}")
-	public CiaDeSeguros buscarporId(@PathVariable("id") Integer id){
+	@GetMapping("/CiaDeSeguros/{id}") //consultar
+	public CiaDeSeguros buscarporId(@PathVariable("id") Integer id){ //filtrado por segmento específico
 		return service.buscarPorId(id);
 	}
 	
-	@PostMapping("/CiaDeSeguros")
-	public CiaDeSeguros crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
+	@PostMapping("/CiaDeSeguros") //imprimir
+	public CiaDeSeguros crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) { //inyecta un objeto nuevo a la clase
 		service.crear(compania);
 		return compania;
 	}
 	
-	@PutMapping("/CiaDeSeguros")
+	@PutMapping("/CiaDeSeguros") //reemplazar
 	public CiaDeSeguros modificarCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
 	    return service.modificar(compania);
 	}
 
 	
-	@DeleteMapping("/CiaDeSeguros/{id}")
+	@DeleteMapping("/CiaDeSeguros/{id}") //eliminar
 	public void eliminar(@PathVariable("id") Integer id){
 		service.eliminar(id);
 	}

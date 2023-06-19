@@ -7,8 +7,8 @@ public interface ICiaDeSegurosService {
 
 	List <CiaDeSeguros> buscarTodos();
 	CiaDeSeguros buscarPorId(Integer id);
-	void crear(CiaDeSeguros compania);
-	void eliminar (Integer id);
+	CiaDeSeguros crear(CiaDeSeguros compania);
+	String eliminar (Integer id);
 	CiaDeSeguros modificar(CiaDeSeguros comapania);
 	
 }

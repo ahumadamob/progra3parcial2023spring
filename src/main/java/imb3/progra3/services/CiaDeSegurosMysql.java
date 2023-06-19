@@ -10,13 +10,16 @@ import org.springframework.stereotype.Service;
 import imb3.progra3.entity.CiaDeSeguros;
 import imb3.progra3.repository.CiaDeSegurosRepository;
 
+//indica clase de servicio
 @Service
 @Primary
 public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 
+	//inyecta el repositorio
 	@Autowired
 	CiaDeSegurosRepository repo;
 	
+	//reemplaza el método de la superclase o interfaz en este caso
 	@Override
 	public List<CiaDeSeguros> buscarTodos(){
 		// TODO Auto-generated method stub
@@ -35,9 +38,9 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
     }
 
 	@Override
-	public void crear(CiaDeSeguros compania) {
+	public CiaDeSeguros crear(CiaDeSeguros compania) {
 		// TODO Auto-generated method stub
-		repo.save(compania);
+		return repo.save(compania);
 	}
 
 	@Override
@@ -59,9 +62,14 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 
 	
 	@Override
-	public void eliminar(Integer id) {
+	public String eliminar(Integer id) {
 		// TODO Auto-generated method stub
-		repo.deleteById(id);
-	}
+		boolean existeRegistro = repo.existsById(id);
+	    if (existeRegistro) {
+	        repo.deleteById(id);
+	        return "Registro eliminado correctamente.";
+	    } else {
+	        return "Registro no encontrado.";
+	    }	}
 	
 }
