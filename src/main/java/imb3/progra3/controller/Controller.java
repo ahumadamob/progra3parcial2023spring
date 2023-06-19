@@ -34,35 +34,82 @@ public class Controller {
 
 	@GetMapping("/CiaDeSeguros/{id}") //consultar
 	public ResponseEntity<APIResponse<CiaDeSeguros>>buscarporId(@PathVariable("id") Integer id){ //filtrado por segmento específico
-		
-		CiaDeSeguros compania = service.buscarPorId(id);
-		
-		if(compania == null) {
-			List<String> messages = new ArrayList<>();
-			messages.add("No encontrada Compañía con ID: "+ id.toString());
-			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, compania);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		CiaDeSeguros companiaPorId = service.buscarPorId(id);
+		if(this.existe(id)) {
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.OK.value(), null, companiaPorId);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 		else {
-			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.OK.value(), null, compania);
-			return ResponseEntity.status(HttpStatus.OK).body(response);
+			List<String> messages = new ArrayList<>();
+			messages.add("No encontrada Compañía con ID: "+ id.toString());
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, companiaPorId);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
 	
 	@PostMapping("/CiaDeSeguros") //imprimir
-	public CiaDeSeguros crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) { //inyecta un objeto nuevo a la clase
-		service.crear(compania);
-		return compania;
+	public ResponseEntity<APIResponse<CiaDeSeguros>> crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) { //inyecta un objeto nuevo a la clase
+		if(this.existe(compania.getId())) {
+			List<String> messages = new ArrayList<>();
+			messages.add("Ya existe una Compañía con ID: "+ compania.getId());
+			messages.add("Si desea actualizar, use el verbo PUT.");
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
+		else {
+			service.crear(compania);
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.CREATED.value(), null, null);
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		}
 	}
 	
 	@PutMapping("/CiaDeSeguros") //reemplazar
-	public CiaDeSeguros modificarCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
-	    return service.modificar(compania);
+	public ResponseEntity<APIResponse<CiaDeSeguros>> modificarCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
+	    if(this.existe(compania.getId())) {
+	    	service.modificar(compania);
+	    	APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.OK.value(), null, compania);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+	    }
+	    else {
+	    	List<String> messages = new ArrayList<>();
+			messages.add("No existe una Compañía con ID: "+ compania.getId());
+			messages.add("Si desea crear una, use el verbo POST.");
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	    }
 	}
-
 	
 	@DeleteMapping("/CiaDeSeguros/{id}") //eliminar
-	public void eliminar(@PathVariable("id") Integer id){
-		service.eliminar(id);
+	public ResponseEntity<APIResponse<CiaDeSeguros>> eliminar(@PathVariable("id") Integer id){
+		CiaDeSeguros companiaPorId = service.buscarPorId(id);
+		if(companiaPorId == null) {
+			List<String> messages = new ArrayList<>();
+			messages.add("No existe una Compañía con ID: "+ id.toString());
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
+		else {
+			service.eliminar(id);
+			List<String> messages = new ArrayList<>();
+			messages.add("Ya no existe una Compañía con ID: "+ id.toString()+". Fue exitosamente eliminada.");
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.OK.value(), messages, null);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}
 	}
+	
+	public boolean existe(Integer id) {
+		if(id == null) {
+			return false;
+		}
+		else {
+			CiaDeSeguros idCompania = service.buscarPorId(id);
+			if (idCompania == null) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+	}
+	
 }
