@@ -11,10 +11,9 @@ public class CiaDeSeguros {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
 	private String nombre;
 	private String direccion;
-	private int numTelefono;
+	private Integer numTelefono;
 	private String tipoSeguro; //terceros, total, empresarial
 	private boolean estadoSeguro; //0= baja, 1= alta
 	
@@ -48,7 +47,7 @@ public class CiaDeSeguros {
 	public void setTipoSeguro(String tipoSeguro) {
 		this.tipoSeguro = tipoSeguro;
 	}
-	public boolean isEstadoSeguro() {
+	public boolean getEstadoSeguro() {
 		return estadoSeguro;
 	}
 	public void setEstadoSeguro(boolean estadoSeguro) {

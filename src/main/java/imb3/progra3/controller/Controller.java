@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import imb3.progra3.entity.CiaDeSeguros;
+import imb3.progra3.services.ICiaDeSegurosService;
 
 @RestController
 @RequestMapping("/api/v1")
 public class Controller {
 	@Autowired
-	iCiaDeSegurosService service;
+	ICiaDeSegurosService service;
 	
 	
 	@GetMapping("/CiaDeSeguros")
 	public List <CiaDeSeguros> buscarTodos(){
 		return service.buscarTodos();
 	}
-	
-	@PostMapping("/CiaDeSeguros")
-	public CiaDeSeguros crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
-		service.guardar(compania);
-		return compania;
-	}
-	
-	@PutMapping("/CiaDeSeguros")
-	public CiaDeSeguros actualizarCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
-		service.guardar(compania);
-		return compania;
-	}
-	
-	
+
 	@GetMapping("/CiaDeSeguros/{id}")
 	public CiaDeSeguros buscarporId(@PathVariable("id") Integer id){
 		return service.buscarPorId(id);
 	}
+	
+	@PostMapping("/CiaDeSeguros")
+	public CiaDeSeguros crearCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
+		service.crear(compania);
+		return compania;
+	}
+	
+	@PutMapping("/CiaDeSeguros")
+	public CiaDeSeguros modificarCiaDeSeguros(@RequestBody CiaDeSeguros compania) {
+	    return service.modificar(compania);
+	}
+
 	
 	@DeleteMapping("/CiaDeSeguros/{id}")
 	public void eliminar(@PathVariable("id") Integer id){
