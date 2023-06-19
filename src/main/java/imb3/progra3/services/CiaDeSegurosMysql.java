@@ -30,7 +30,8 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 		Optional<CiaDeSeguros> companiaOptional = repo.findById(id);
         if (companiaOptional.isPresent()) {
             return companiaOptional.get();
-        } else {
+        }
+        else {
             throw new NoSuchElementException("CiaDeSeguros no encontrada con ID: " + id);
         }
     }

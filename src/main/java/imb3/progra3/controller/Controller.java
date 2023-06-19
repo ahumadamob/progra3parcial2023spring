@@ -53,12 +53,12 @@ public class Controller {
 			List<String> messages = new ArrayList<>();
 			messages.add("Ya existe una Compañía con ID: "+ compania.getId());
 			messages.add("Si desea actualizar, use el verbo PUT.");
-			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, null);
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), messages, compania);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 		else {
 			service.crear(compania);
-			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.CREATED.value(), null, null);
+			APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.CREATED.value(), null, compania);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		}
 	}
@@ -98,18 +98,12 @@ public class Controller {
 	}
 	
 	public boolean existe(Integer id) {
-		if(id == null) {
-			return false;
-		}
-		else {
-			CiaDeSeguros idCompania = service.buscarPorId(id);
-			if (idCompania == null) {
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
+	    if (id == null) {
+	        return false;
+	    }
+	    CiaDeSeguros idCompania = service.buscarPorId(id);
+	    return idCompania != null;	
 	}
+
 	
 }
