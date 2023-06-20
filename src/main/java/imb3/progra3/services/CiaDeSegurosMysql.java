@@ -2,7 +2,6 @@ package imb3.progra3.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
             return companiaOptional.get();
         }
         else {
-            throw new NoSuchElementException("CiaDeSeguros no encontrada con ID: " + id);
+            return null;
         }
     }
 
@@ -54,7 +53,7 @@ public class CiaDeSegurosMysql implements ICiaDeSegurosService{
 	        ciaExistente.setEstadoSeguro(ciaModificada.getEstadoSeguro());
 	        return repo.save(ciaExistente);
 	    } else {
-	        throw new NoSuchElementException("CiaDeSeguros no encontrada con ID: " + id);
+	        return null;
 	    }
 	}
 
