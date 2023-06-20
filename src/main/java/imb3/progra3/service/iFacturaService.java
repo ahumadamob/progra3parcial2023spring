@@ -6,13 +6,15 @@ import imb3.progra3.entity.Factura;
 
 public interface iFacturaService {
 	
-	public List<Factura> buscarTodos();
+	public List<Factura> findAll();
 	
-	public Factura buscarPorId(int nroFactura);
+	public Factura findById(int nroFactura);
 	
-	public void guardar(Factura f);
+//	public void save(Factura f);
+	public Factura save(Factura f);
 	
-	public void eliminar(int nro);
+//	public void deleteById(int nro);
+	public Factura deleteById(int nro);
 	
 
 }

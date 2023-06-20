@@ -17,29 +17,49 @@ public class FacturaServiceImpl implements iFacturaService {
 	FacturaRepository repo;
 	
 	@Override
-	public List<Factura> buscarTodos() {
+	public List<Factura> findAll() {
 		return repo.findAll();
 	}
 
 	@Override
-	public Factura buscarPorId(int nroFactura) {
+	public Factura findById(int nroFactura) {
 		Optional<Factura> optional = repo.findById(nroFactura);
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
-			return null;
+			Factura f = new Factura();
+			f.setNroFactura(nroFactura);
+			f.setClienteAsociado("NO EXISTE esa factura");
+			return f;
+//          return null;			
 		}
 	}
 
 	@Override
-	public void guardar(Factura f) {
+	public Factura save(Factura f) {
 		repo.save(f);
+		return f;
 		
 	}
 
 	@Override
-	public void eliminar(int nro) {
-		repo.deleteById(nro);
+//	public void deleteById(int nroFactura) {
+//		repo.deleteById(nroFactura);
+	public Factura deleteById(int nroFactura) {
+		Optional<Factura> optional = repo.findById(nroFactura);
+		if (optional.isPresent()) {
+			repo.deleteById(nroFactura);
+			Factura f = new Factura();
+			f.setNroFactura(nroFactura);
+			f.setClienteAsociado("factura ELIMINADA");
+			return f;		
+		} else {
+			Factura f = new Factura();
+			f.setNroFactura(nroFactura);
+			f.setClienteAsociado("NO EXISTE esa factura");
+            return f;			
+		}
+		
 		
 	}
 

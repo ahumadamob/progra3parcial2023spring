@@ -3,6 +3,8 @@ package imb3.progra3.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,38 +18,58 @@ import imb3.progra3.entity.Factura;
 import imb3.progra3.service.iFacturaService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/factura")
 public class FacturaController {
 	
 	
 	@Autowired
 	iFacturaService service; 
 
-	@GetMapping("/factura")
-	public List<Factura> buscarTodos() {
-		return service.buscarTodos();
+	@GetMapping("")
+//	public List<Factura> buscarTodos() {
+//		return service.findAll();
+//	}
+	public ResponseEntity<List<Factura>> buscarTodos() {
+		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
 	}
 	
-	@GetMapping("/factura/{id}")
-	public Factura buscarPorId(@PathVariable("id") Integer id) {
-		return service.buscarPorId(id);	
+	
+	@GetMapping("/{id}")
+//	public Factura buscarPorId(@PathVariable("id") Integer id) {
+//		return service.findById(id);	
+//	}
+	public ResponseEntity<Factura> buscarPorId(@PathVariable("id") Integer id) {	
+		return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));	
 	}
 	
-	@PostMapping("/factura")
-	public Factura crearFactura(@RequestBody Factura f) {
-		service.guardar(f);
-		return f;
+	
+	@PostMapping("")
+//	public Factura crearFactura(@RequestBody Factura f) {
+//		service.save(f);
+//		return f;
+//	}
+	public ResponseEntity<Factura> crearFactura(@RequestBody Factura f) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.save(f));
 	}
 	
-	@PutMapping("/factura/{id}")
-	public Factura actualizarFactura(@PathVariable("id") Integer id, @RequestBody Factura f) {
-		service.guardar(f);
-		return f;
+	
+	@PutMapping("/{id}")
+//	public Factura actualizarFactura(@PathVariable("id") Integer id, @RequestBody Factura f) {
+//		service.save(f);
+//		return f;
+//	}
+	public ResponseEntity<Factura> actualizarFactura(@PathVariable("id") Integer id, @RequestBody Factura f) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.save(f));
 	}
 	
-	@DeleteMapping("/factura/{id}")
-	public void eliminar(@PathVariable("id") Integer id) {
-		service.eliminar(id);
+	
+	@DeleteMapping("/{id}")
+//	public Factura eliminar(@PathVariable("id") Integer id) {
+//		Factura f = service.deleteById(id);
+//		return f;
+//	}
+	public ResponseEntity<Factura> eliminar(@PathVariable("id") Integer id) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
 	}
 	
 	
