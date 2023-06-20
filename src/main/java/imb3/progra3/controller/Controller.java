@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import imb3.progra3.entity.CiaDeSeguros;
 import imb3.progra3.services.ICiaDeSegurosService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 //indica clase controladora y ruta de aplicación
 @RestController
+@ControllerAdvice
 @RequestMapping("/api/v1")
 public class Controller {
 	//inyección de dependencias, funcionamiento automático de los objetos
@@ -105,5 +110,14 @@ public class Controller {
 	    return idCompania != null;	
 	}
 
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<APIResponse<?>> handleConstraintViolationException(ConstraintViolationException ex){
+		List<String> errors = new ArrayList<>();
+		for(ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+			errors.add(violation.getMessage());
+		}
+		APIResponse<CiaDeSeguros> response = new APIResponse<CiaDeSeguros>(HttpStatus.BAD_REQUEST.value(), errors, null);
+		return ResponseEntity.badRequest().body(response);
+	}
 	
 }

@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,7 +19,6 @@ public class CiaDeSeguros {
 	@NotBlank(message = "La dirección no puede estar vacía.")
 	@Size(min = 3, max = 100, message = "Mínimo 3, máximo 100 caracteres.")
 	private String direccion;
-	@Pattern(regexp = "\\d{10}")
 	private Integer numTelefono;
 	private String tipoSeguro; //terceros, total, empresarial
 	private boolean estadoSeguro; //0= baja, 1= alta
