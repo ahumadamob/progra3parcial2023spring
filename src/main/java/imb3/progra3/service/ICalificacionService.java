@@ -6,9 +6,9 @@ import imb3.progra3.entity.Calificacion;
 
 
 public interface ICalificacionService {
-	List<Calificacion> buscarTodos() throws Exception;
-	Calificacion buscarPorId(Long id) throws Exception;
-	Calificacion guardar(Calificacion calificacion) throws Exception;
-	boolean eliminar(Long id) throws Exception;
+	List<Calificacion> buscarTodos();
+	Calificacion buscarPorId(Long id);
+	void guardar(Calificacion calificacion);
+	void eliminar(Long id);
 	
 }

@@ -18,47 +18,31 @@ public class CalificacionService implements ICalificacionService {
 	CalificacionRepository calificacionRepo;
 	
 	@Override
-	public ArrayList<Calificacion> buscarTodos() throws Exception {
-		try {
-			List<Calificacion> entities = calificacionRepo.findAll();
-			return (ArrayList<Calificacion>) entities;
-		}catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+	public ArrayList<Calificacion> buscarTodos() {
+		List<Calificacion> entities = calificacionRepo.findAll();
+		return (ArrayList<Calificacion>) entities;
 	}
 	
 	@Override
-	public Calificacion buscarPorId(Long id) throws Exception {
-		try {
-			Optional<Calificacion> entityOptional = calificacionRepo.findById(id);
+	public Calificacion buscarPorId(Long id) {
+		Optional<Calificacion> entityOptional = calificacionRepo.findById(id);
+		if(entityOptional.isPresent()) {
 			return entityOptional.get();
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+		}else {
+			return null;
+		}	
 	}
 	
 	@Override
-	public Calificacion guardar(Calificacion entity) throws Exception {
-		try {
-			entity = calificacionRepo.save(entity);
-			return entity;
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+	public void guardar(Calificacion entity) {
+		entity = calificacionRepo.save(entity);
+		
 	}
 	
 	@Override
-	public boolean eliminar(Long id) throws Exception {
-		try {
-			if(calificacionRepo.existsById(id)) {
-				calificacionRepo.deleteById(id);
-				return true;
-			} else {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+	public void eliminar(Long id) {
+		calificacionRepo.deleteById(id);
+
 	}
 
 	
