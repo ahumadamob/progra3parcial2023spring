@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import imb3.progra3.entity.CarritoDeCompras;
 import imb3.progra3.repository.CarritoRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 public class CarritoDeCompraServiceImpl implements carritoService {
@@ -17,41 +16,27 @@ public class CarritoDeCompraServiceImpl implements carritoService {
 	private CarritoRepository carritoRepository;
 
 	@Override
-	@Transactional
-	public List<CarritoDeCompras> buscartodo() throws Exception {
-		try {
+	public List<CarritoDeCompras> buscartodo() {
+
 			List<CarritoDeCompras>carrito=carritoRepository.findAll();
 			return carrito;
-		}catch(Exception e) {
-			throw new Exception(e.getMessage());
-		}
 	}
 
 	@Override
-	@Transactional
-	public CarritoDeCompras buscarPorId(Long id) throws Exception {
-		try {
+	public CarritoDeCompras buscarPorId(Long id) {
+
 			Optional<CarritoDeCompras>carritoOpc=carritoRepository.findById(id);
 			return carritoOpc.get();
-		}catch(Exception e) {
-			throw new Exception(e.getMessage());
-		}
 	}
 
 	@Override
-	@Transactional
-	public CarritoDeCompras guardar(CarritoDeCompras carrito) throws Exception {
-		try {
+	public CarritoDeCompras guardar(CarritoDeCompras carrito) {
 			carrito=carritoRepository.save(carrito);
 			return carrito;
-		}catch(Exception e) {
-			throw new Exception(e.getMessage());
-		}
 	}
 
 	@Override
-	@Transactional
-	public CarritoDeCompras modificar(Long id, CarritoDeCompras carrito) throws Exception {
+	public CarritoDeCompras modificar(Long id, CarritoDeCompras carrito) {
 		Optional<CarritoDeCompras>carritoOpc=carritoRepository.findById(id);
 		CarritoDeCompras carritoMod=carritoOpc.get();
 		carritoMod=carritoRepository.save(carrito);
@@ -59,18 +44,9 @@ public class CarritoDeCompraServiceImpl implements carritoService {
 	}
 
 	@Override
-	@Transactional
-	public boolean borrar(Long id) throws Exception {
-		try {
-			if(carritoRepository.existsById(id)) {
-				carritoRepository.deleteById(id);
-				return true;
-			}else {
-                throw new Exception();
-			}
-		}catch(Exception e) {
-			throw new Exception(e.getMessage());
-		}
+	public boolean borrar(Long id) {
+			carritoRepository.deleteById(id);
+		return true;
 	}
 
 
