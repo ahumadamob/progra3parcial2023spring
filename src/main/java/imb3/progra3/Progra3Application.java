@@ -1,4 +1,4 @@
-package imb3.progra3;
+ package imb3.progra3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
