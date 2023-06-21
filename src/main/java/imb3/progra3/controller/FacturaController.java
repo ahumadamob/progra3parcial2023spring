@@ -68,7 +68,10 @@ public class FacturaController {
 //		Factura f = service.deleteById(id);
 //		return f;
 //	}
-	public ResponseEntity<Factura> eliminar(@PathVariable("id") Integer id) {
+//	public ResponseEntity<Factura> eliminar(@PathVariable("id") Integer id) {
+//		return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
+//	}
+	public ResponseEntity<String> eliminar(@PathVariable("id") Integer id) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
 	}
 	

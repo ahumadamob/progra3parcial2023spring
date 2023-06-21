@@ -14,7 +14,8 @@ public interface iFacturaService {
 	public Factura save(Factura f);
 	
 //	public void deleteById(int nro);
-	public Factura deleteById(int nro);
+//	public Factura deleteById(int nro);
+	public String deleteById(int nro);
 	
 
 }
