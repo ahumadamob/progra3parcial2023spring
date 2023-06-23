@@ -1,11 +1,11 @@
 package imb3.progra3.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity 
 public class Compra {
@@ -14,6 +14,8 @@ public class Compra {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String fecha;
+	@NotBlank(message="El nombre no peude estar vacio")
+	@Size(max=40, message = "El nombre no debe superar los 40 caracteres")
 	private String cliente;
 	private String productos;
 	private double total;

@@ -34,17 +34,17 @@ public class CompraServiceImpJpa implements ICompraService {
 	}	
 
 	@Override
-	public void guardar(Compra compra) {
+	public void guardarCompra(Compra compra) {
 		repository.save(compra);
 	}
 
 	@Override
-	public void eliminar(Integer id) {
+	public void eliminarCompra(Integer id) {
 		repository.deleteById(id);
 	}
 
 	@Override
-	public void crear(Compra compra) {
+	public void crearCompra(Compra compra) {
 		repository.save(compra);
 		
 	}
