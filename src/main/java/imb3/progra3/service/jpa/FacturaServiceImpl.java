@@ -27,11 +27,11 @@ public class FacturaServiceImpl implements iFacturaService {
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
-			Factura f = new Factura();
-			f.setNroFactura(nroFactura);
-			f.setClienteAsociado("NO EXISTE esa factura");
-			return f;
-//          return null;			
+//			Factura f = new Factura();
+//			f.setNroFactura(nroFactura);
+//			f.setClienteAsociado("NO EXISTE esa factura");
+//			return f;
+            return null;			
 		}
 	}
 

@@ -2,7 +2,7 @@ package imb3.progra3.controller;
 
 import java.util.List;
 
-public class APIResponse<T> {
+public class APIResponse<T> {        // T: parametro generico   =>   objeto
 	
 	// atributos
 	private int status;
