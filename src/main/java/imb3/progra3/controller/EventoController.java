@@ -1,8 +1,11 @@
 package imb3.progra3.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +32,19 @@ public class EventoController {
 	}
 	
 	@GetMapping("/Evento/{id}")
-	public Evento buscarPorId(@PathVariable("id")Integer id){
-		return service.buscarPorId(id);
+	public ResponseEntity<ApIResponse<Evento>> buscarPorId(@PathVariable("id")Integer id){
+		Evento evento = service.buscarPorId(id);
+		if(this.existe(id)) {
+			ApIResponse<Evento> response = new ApIResponse <Evento>(HttpStatus.OK.value(),null,evento);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}else {
+			List<String> mensajes = new ArrayList();
+			mensajes.add("No existe");
+			mensajes.add("Vuelva a consultar, por favor");
+			ApIResponse<Evento> response = new ApIResponse <Evento>(HttpStatus.BAD_REQUEST.value(),mensajes,null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			
+		}
 		
 	}
 	
@@ -56,6 +70,17 @@ public class EventoController {
 	}
 	
 	
-	
+	private boolean existe(Integer id) {
+		if (id == null) {
+			return false;
+		}else {
+		    Evento evento = service.buscarPorId(id);
+		    if(evento == null) {
+		    	return false;
+		    }else {
+		    	return true;
+		    }
+		}	
+	}
 
 }
