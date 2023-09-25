@@ -1,13 +1,13 @@
-package imb3.progra3;
+package imb3.pp3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Progra3Application {
+public class Pp3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Progra3Application.class, args);
+		SpringApplication.run(Pp3Application.class, args);
 	}
 
 }
